@@ -1,0 +1,91 @@
+#include <stdio.h>
+
+#define INF 1000000
+#define MAX 100
+
+void printPath(int path[MAX][MAX], int i, int j) {
+    if (i == j) {
+        printf("%d ", i + 1);
+    } else if (path[i][j] == -1) {
+        printf("No path");
+    } else {
+        printPath(path, i, path[i][j]);
+        printf("%d ", j + 1);
+    }
+}
+
+void floydWarshall(int W[MAX][MAX], int n) {
+    int D[MAX][MAX], path[MAX][MAX];
+    int i, j, k;
+
+    // Initialize distance and path
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            D[i][j] = W[i][j];
+            if (i == j || W[i][j] == INF) {
+                path[i][j] = -1;
+            } else {
+                path[i][j] = i;
+            }
+        }
+    }
+
+    // Floyd-Warshall core algorithm
+    for (k = 0; k < n; k++) {
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                if (D[i][k] + D[k][j] < D[i][j]) {
+                    D[i][j] = D[i][k] + D[k][j];
+                    path[i][j] = path[k][j];
+                }
+            }
+        }
+    }
+
+    // Print distance matrix
+    printf("\nAll-Pairs Shortest Distance Matrix:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            if (D[i][j] == INF)
+                printf("INF ");
+            else
+                printf("%3d ", D[i][j]);
+        }
+        printf("\n");
+    }
+
+    // Print shortest paths
+    printf("\nShortest Paths Between All Pairs:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            if (i != j) {
+                printf("Path from %d to %d: ", i + 1, j + 1);
+                if (D[i][j] == INF)
+                    printf("No path\n");
+                else {
+                    printPath(path, i, j);
+                    printf("(Cost: %d)\n", D[i][j]);
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    int W[MAX][MAX];
+    int n, i, j;
+
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter the adjacency matrix (use %d for INF):\n", INF);
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &W[i][j]);
+        }
+    }
+
+    floydWarshall(W, n);
+
+    return 0;
+}
