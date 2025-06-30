@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+// Step counter
+int mergeStep = 0;
+
+// Merge function based on the given pseudocode
+void Merge(float a[], int p, int q, int r) {
+    int n1 = q - p + 1;
+    int n2 = r - q;
+
+    float L[n1 + 1], R[n2 + 1];
+    int i, j, k;
+
+    for (i = 0; i < n1; i++)
+        L[i] = a[p + i];
+    for (j = 0; j < n2; j++)
+        R[j] = a[q + 1 + j];
+
+    L[n1] = R[n2] = __FLT_MAX__;
+
+    i = j = 0;
+
+    printf("\n[Conquer] Merging subarrays:\nLeft:  ");
+    for (int t = 0; t < n1; t++) printf("%.2f ", L[t]);
+    printf("\nRight: ");
+    for (int t = 0; t < n2; t++) printf("%.2f ", R[t]);
+
+    for (k = p; k <= r; k++) {
+        if (L[i] <= R[j]) {
+            a[k] = L[i++];
+        } else {
+            a[k] = R[j++];
+        }
+    }
+
+    printf("\nMerged: ");
+    for (k = p; k <= r; k++) printf("%.2f ", a[k]);
+    printf("\n");
+}
+
+// Merge sort function with divide-conquer steps
+void Merge_sort(float a[], int p, int r) {
+    if (p < r) {
+        mergeStep++;
+        int q = (p + r) / 2;
+
+        printf("\n[Divide] Step %d: Splitting array at index %d\n", mergeStep, q);
+        printf("Left half: ");
+        for (int i = p; i <= q; i++) printf("%.2f ", a[i]);
+        printf("\nRight half: ");
+        for (int i = q + 1; i <= r; i++) printf("%.2f ", a[i]);
+        printf("\n");
+
+        Merge_sort(a, p, q);
+        Merge_sort(a, q + 1, r);
+        Merge(a, p, q, r);
+    }
+}
+
+int main() {
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    float a[n];
+
+    printf("Enter %d numbers (can be negative and decimal):\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%f", &a[i]);
+    }
+
+    Merge_sort(a, 0, n - 1);
+
+    printf("\nFinal Sorted array:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%.2f ", a[i]);
+    }
+    printf("\nTotal steps (Divide operations): %d\n", mergeStep);
+
+    return 0;
+}
