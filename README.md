@@ -46,3 +46,19 @@ Partition → [10, 25, 5] | 34
 Recursively sort [10, 25, 5]
 
 Final → [5, 10, 25, 34]
+
+
+| **Algorithm**           | **Best Case** | **Average Case** | **Worst Case** | **Space** | **Stable** | **In-place** | **Comparison-based** |
+| ----------------------- | ------------- | ---------------- | -------------- | --------- | ---------- | ------------ | -------------------- |
+| **Bubble Sort**         | O(n)          | O(n²)            | O(n²)          | O(1)      | ✔️         | ✔️           | ✔️                   |
+| **Selection Sort**      | O(n²)         | O(n²)            | O(n²)          | O(1)      | ❌          | ✔️           | ✔️                   |
+| **Insertion Sort**      | O(n)          | O(n²)            | O(n²)          | O(1)      | ✔️         | ✔️           | ✔️                   |
+| **Merge Sort**          | O(n log n)    | O(n log n)       | O(n log n)     | O(n)      | ✔️         | ❌            | ✔️                   |
+| **Quick Sort**          | O(n log n)    | O(n log n)       | O(n²)          | O(log n)  | ❌          | ✔️           | ✔️                   |
+| **Heap Sort**           | O(n log n)    | O(n log n)       | O(n log n)     | O(1)      | ❌          | ✔️           | ✔️                   |
+| **Counting Sort**       | O(n + k)      | O(n + k)         | O(n + k)       | O(k)      | ✔️         | ❌            | ❌ (non-comparison)   |
+| **Radix Sort**          | O(nk)         | O(nk)            | O(nk)          | O(n + k)  | ✔️         | ❌            | ❌ (non-comparison)   |
+| **Bucket Sort**         | O(n + k)      | O(n + k)         | O(n²)          | O(n + k)  | ✔️         | ❌            | ❌ (non-comparison)   |
+| **Shell Sort**          | O(n log n)    | O(n log² n)      | O(n²)          | O(1)      | ❌          | ✔️           | ✔️                   |
+| **Tim Sort** *(Hybrid)* | O(n)          | O(n log n)       | O(n log n)     | O(n)      | ✔️         | ❌            | ✔️                   |
+
